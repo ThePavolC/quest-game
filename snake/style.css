@@ -12,7 +12,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* min-height: 100vh; */
   background: #e3f2fd;
 }
 
@@ -22,7 +21,7 @@ body {
 
 .wrapper {
   width: 90vmin;
-  height: 115vmin;
+  height: 140vmin;
   display: flex;
   overflow: hidden;
   flex-direction: column;
