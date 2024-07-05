@@ -12,11 +12,12 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #e3f2fd;
+  background: #e3f2fd !important;
 }
 
 .heading {
   padding: 5vmin;
+  text-align: center;
 }
 
 .wrapper {

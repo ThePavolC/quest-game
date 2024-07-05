@@ -2,6 +2,7 @@ const playBoard = document.querySelector(".play-board");
 const scoreElement = document.querySelector(".score");
 const highScoreElement = document.querySelector(".high-score");
 const controls = document.querySelectorAll(".controls i");
+const heading = document.querySelectorAll(".heading h4");
 
 let gameOver = false;
 let foodX, foodY;
@@ -13,9 +14,16 @@ let snakeBody = [];
 let setIntervalId;
 let score = 0;
 
+let limit = 10;
+let riddle = "Stráži dom a nemá pušku, zbadá letieť každú mušku. Čo je to?";
+let failMessage = "Koniec hry! Nemáš dostatok bodov. Skús to znova.";
+let headingCopy =
+  "Vyhraj viac ako " + limit + " bodov, aby si získala ďalšiu hádanku.";
+heading[0].innerText = headingCopy;
+
 // Getting high score from the local storage
 let highScore = localStorage.getItem("high-score") || 0;
-highScoreElement.innerText = `High Score: ${highScore}`;
+highScoreElement.innerText = `Najvyššie skóre: ${highScore}`;
 
 const updateFoodPosition = () => {
   // Passing a random 1 - 30 value as food position
@@ -26,8 +34,25 @@ const updateFoodPosition = () => {
 const handleGameOver = () => {
   // Clearing the timer and reloading the page on game over
   clearInterval(setIntervalId);
-  alert("Game Over! Press OK to replay...");
-  location.reload();
+
+  // set modal message
+  $("#message-modal").on("show.bs.modal", function (event) {
+    var modal = $(this);
+    if (score >= limit) {
+      modal.find(".modal-body").text(riddle);
+    } else {
+      modal.find(".modal-body").text(failMessage);
+    }
+  });
+
+  // reload on close
+  $("#message-modal").on("hidden.bs.modal", function (e) {
+    console.log("realod");
+    location.reload();
+  });
+
+  // show modal
+  $("#message-modal").modal("show");
 };
 
 const changeDirection = (e) => {
@@ -65,8 +90,8 @@ const initGame = () => {
     score++; // increment score by 1
     highScore = score >= highScore ? score : highScore;
     localStorage.setItem("high-score", highScore);
-    scoreElement.innerText = `Score: ${score}`;
-    highScoreElement.innerText = `High Score: ${highScore}`;
+    scoreElement.innerText = `Skóre: ${score}`;
+    highScoreElement.innerText = `Najvyššie skóre: ${highScore}`;
   }
   // Updating the snake's head position based on the current velocity
   snakeX += velocityX;
