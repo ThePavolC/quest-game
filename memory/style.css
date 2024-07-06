@@ -6,6 +6,7 @@ p {
   text-align: center;
   font-size: 24px;
   font-weight: bold;
+  margin: 4px;
 }
 
 .actions {
@@ -22,8 +23,8 @@ p {
 }
 
 .card {
-  height: calc(86px / 2 * 3);
-  width: 86px;
+  height: calc(84px / 2 * 3);
+  width: 84px;
   margin: 4px;
   border-radius: 4px;
   /* background-color: white; */
