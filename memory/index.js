@@ -4,7 +4,7 @@ let firstCard, secondCard;
 let lockBoard = false;
 let score = 0;
 
-let successLimit = 16;
+let successLimit = 18;
 let matches = 0;
 let numberOfPairs = 9;
 let riddle =
@@ -138,6 +138,7 @@ function restart() {
   resetBoard();
   shuffleCards();
   score = 0;
+  matches = 0;
   document.querySelector(".score").textContent = score;
   gridContainer.innerHTML = "";
   generateCards();
