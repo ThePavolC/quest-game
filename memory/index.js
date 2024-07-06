@@ -4,7 +4,19 @@ let firstCard, secondCard;
 let lockBoard = false;
 let score = 0;
 
+let successLimit = 16;
+let matches = 0;
+let numberOfPairs = 9;
+let riddle = "Riddle message";
+let failMessage =
+  "Nepodarilo sa ti nájsť všetky dvojice v menej ako " +
+  successLimit +
+  " ťahoch. Skús to znova.";
+
 document.querySelector(".score").textContent = score;
+
+document.querySelector("h4").textContent =
+  "Ziskaj menej ako " + successLimit + " bodov, aby si získala ďalšiu hádanku.";
 
 fetch("./data/cards.json")
   .then((res) => res.json())
@@ -33,7 +45,7 @@ function generateCards() {
     cardElement.classList.add("card");
     cardElement.setAttribute("data-name", card.name);
     cardElement.innerHTML = `
-      <div class="front">
+      <div class="front container">
         <img class="front-image" src=${card.image} />
       </div>
       <div class="back"></div>
@@ -54,16 +66,44 @@ function flipCard() {
     return;
   }
 
-  secondCard = this;
   score++;
   document.querySelector(".score").textContent = score;
-  lockBoard = true;
 
+  secondCard = this;
+  lockBoard = true;
   checkForMatch();
+}
+
+function showModal() {
+  // set modal message
+  $("#message-modal").on("show.bs.modal", function (event) {
+    var modal = $(this);
+    if (score <= successLimit) {
+      modal.find(".modal-body").text(riddle);
+    } else {
+      modal.find(".modal-body").text(failMessage);
+    }
+  });
+
+  // reload on close
+  $("#message-modal").on("hidden.bs.modal", function (e) {
+    console.log("realod");
+    location.reload();
+  });
+
+  // show modal
+  $("#message-modal").modal("show");
 }
 
 function checkForMatch() {
   let isMatch = firstCard.dataset.name === secondCard.dataset.name;
+  console.log("matches:", matches);
+  if (isMatch) {
+    matches++;
+    if (matches >= successLimit || matches === numberOfPairs) {
+      showModal();
+    }
+  }
 
   isMatch ? disableCards() : unflipCards();
 }
