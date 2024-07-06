@@ -7,7 +7,12 @@ let score = 0;
 let successLimit = 16;
 let matches = 0;
 let numberOfPairs = 9;
-let riddle = "Riddle message";
+let riddle =
+  "Z dreva som vyrezaný, " +
+  "zvukmi sa s tebou hneď rozprávam. " +
+  "Fúkať viem ako vietor silný, " +
+  "radosť ti prinášam, smútok zaháňam. " +
+  "Čo som?";
 let failMessage =
   "Nepodarilo sa ti nájsť všetky dvojice v menej ako " +
   successLimit +
